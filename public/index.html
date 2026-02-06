@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Student</title>
+</head>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #1d2671, #c33764);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    color: #333;
+  }
+
+  .container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 900px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  }
+
+  h1, h2 {
+    text-align: center;
+    margin-top: 0;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  form div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  form div:nth-child(5),
+  form button {
+    grid-column: span 2;
+  }
+
+  input {
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: none;
+    background: #1d2671;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #151c52;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    background: #f3f4f6;
+    text-align: left;
+  }
+
+  th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  td button {
+    background: #c0392b;
+  }
+
+  td button:hover {
+    background: #962d22;
+  }
+
+  #status {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  h1{
+    color: #000000;
+   text-align: center;}
+   /* subtle glass effect */
+.container {
+  backdrop-filter: blur(8px);
+}
+
+/* section spacing */
+hr {
+  margin: 40px 0;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* nicer selects */
+select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* success / error status */
+#status {
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+#status.success {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+#status.error {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+/* hover rows */
+tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* delete button polish */
+td button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+  </style>
+
+    <body>
+      <div class="container">
+        <h1>Add Student</h1>
+
+          <form id="studentForm">
+
+      <div>
+            <label for="firstName">First Name</label><br />
+              <input id="firstName" name="firstName" type="text" required />
+      </div>
+
+      <div>
+            <label for="lastName">Last Name</label><br />
+              <input id="lastName" name="lastName" type="text" required />
+      </div>
+
+      <div>
+            <label for="email">Email</label><br />
+              <input id="email" name="email" type="email" required />
+      </div>
+
+      <div>
+            <label for="enrollmed">Enrollment Date</label><br />
+              <input id="enrollmed" 
+              name="enrollmed" 
+              type="date" 
+              required
+              min="2010-01-01"
+              max="2026-12-31"
+              required
+            />
+      </div>
+
+      <div>
+          <label for="tuition">Tuition Amount</label><br />
+            <input
+            id="tuition"
+            name="tuition"
+            type="number"
+            min="50000"
+            max="90000"
+            step="0.01"
+            required
+          />
+      </div>
+            <button type="submit">Add Student</button>
+
+          </form>
+<hr />
+
+        <h2>Add Course</h2>
+
+              <form id="courseForm">
+      <div>
+          <label for="courseName">Course Name</label><br />
+            <input
+            id="courseName"
+            name="courseName"
+            type="text"
+            required
+            />
+      </div>
+
+      <div>
+          <label for="credits">Credits</label><br />
+            <input
+            id="credits"
+            name="credits"
+            type="number"
+            min="0"
+            max="30"
+            required
+            />
+      </div>
+
+            <button type="submit">Add Course</button>
+          </form>
+
+        <h3>Courses</h3>
+
+    <table border="1" cellpadding="6">
+      <thead>
+        <tr>
+          <th>Course Name</th>
+          <th>Credits</th>
+        </tr>
+      </thead>
+            <tbody id="coursesTable"></tbody>
+    </table>
+
+<hr />
+        <h2>Enroll Student</h2>
+
+          <form id="enrollmentForm">
+              <select id="studentSelect" name="studentId" required>
+                <option value="">Select a student</option>
+              </select>
+
+              <select id="courseSelect" name="courseId" required>
+                <option value="">Select a course</option>
+              </select>
+
+
+                <input type="date" name="enrollmentDate" required />
+              <select name="grade">
+                <option value="">No grade yet</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="F">F</option>
+              </select>
+
+              <button type="submit">Enroll</button>
+
+            </form>
+
+              <p id="status"></p>
+<hr />
+
+        <h2>Students</h2>
+
+    <table border="1" cellpadding="6">
+      <thead>
+        <tr>
+          <th>First</th>
+          <th>Last</th>
+          <th>Email</th>
+          <th>Enrolled</th>
+          <th>Tuition</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+            <tbody id="studentsTable"></tbody>
+      </table>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  async function loadStudentsDropdown() {
+  const res = await fetch("/students");
+  const students = await res.json();
+
+  const select = document.getElementById("studentSelect");
+  select.innerHTML = '<option value="">Select a student</option>';
+  students.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s.StudentID;
+    opt.textContent = `${s.FirstName} ${s.LastName}`;
+    select.appendChild(opt);
+  });
+  }
+
+  async function loadCourses() {
+  const res = await fetch("/courses");
+  const courses = await res.json();
+
+  // courses table
+  const table = document.getElementById("coursesTable");
+  table.innerHTML = "";
+
+  courses.forEach(c => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${c.CourseName}</td>
+      <td>${c.Credits}</td>
+    `;
+    table.appendChild(tr);
+  });
+
+  // course dropdown
+  const select = document.getElementById("courseSelect");
+  select.innerHTML = '<option value="">Select a course</option>';
+
+  courses.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c.CourseID;
+    opt.textContent = `${c.CourseName} (${c.Credits} credits)`;
+    select.appendChild(opt);
+  });
+  }
+  document
+  .getElementById("courseForm")
+  .addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+    const form = e.target;
+
+    const res = await fetch("/courses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        courseName: form.courseName.value,
+        credits: form.credits.value
+  })
+  });
+
+    if (res.ok) {
+      form.reset();
+      loadCourses(); // refresh table + dropdown
+  } else {
+      alert("Error adding course");
+  }
+  });
+  document
+  .getElementById("enrollmentForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    console.log("ENROLL SUBMITTED"); 
+    const form = e.target;
+
+    const res = await fetch("/enrollments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        studentId: form.studentId.value,
+        courseId: form.courseId.value,
+        enrollmentDate: form.enrollmentDate.value,
+        grade: form.grade.value || null
+  })
+ });
+
+    let data;
+      try {
+  data = await res.json();
+  } catch (e) {
+  alert("Server returned an invalid response");
+  return;
+  }
+
+
+const status = document.getElementById("status");
+
+if (!res.ok) {
+  status.textContent = data.error || "Enrollment failed";
+  status.className = "error";
+  return;
+  }
+
+  status.textContent = `✅ Enrollment successful (ID: ${data.enrollmentId})`;
+  status.className = "success";
+
+  form.reset();
+
+
+  });
+
+  async function loadStudents() {
+  const res = await fetch("/students");
+  const students = await res.json();
+
+  const table = document.getElementById("studentsTable");
+  table.innerHTML = "";
+
+  students.forEach(s => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${s.FirstName}</td>
+      <td>${s.LastName}</td>
+      <td>${s.Email}</td>
+      <td>${s.Enrollmed?.split("T")[0]}</td>
+      <td>${s.tuition}</td>
+      <td>
+        <button onclick="deleteStudent(${s.StudentID})">Delete</button>
+      </td>
+    `;
+    table.appendChild(tr);
+  });
+  }
+
+  window.deleteStudent = async function (id) {
+  await fetch(`/students/${id}`, { method: "DELETE" });
+  loadStudents();
+  };
+
+  document
+  .getElementById("studentForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const res = await fetch("/students", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: form.firstName.value,
+        lastName: form.lastName.value,
+        email: form.email.value,
+        enrollmed: form.enrollmed.value,
+        tuition: form.tuition.value
+      })
+    });
+
+    if (res.ok) {
+      form.reset();
+      loadStudents();
+    } else {
+      alert("Error adding student");
+    }
+  });
+
+// initial load
+  loadCourses();
+  loadStudents();
+  loadStudentsDropdown();
+  });
+</script>
+
+
+  </div>
+    </body>
+</html>
