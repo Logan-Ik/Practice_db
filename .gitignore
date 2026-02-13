@@ -1,5 +1,6 @@
 # Ignore Windows temp files
 AppData/
+
 *.jtx
 *.log
 *.tmp
